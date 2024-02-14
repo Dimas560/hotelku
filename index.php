@@ -7,7 +7,7 @@ include "includes/koneksi.php";
 
 <head>
   <link rel="icon" href=" ../image/man.webp">
-  <title>SELAMAT DATANG - HOTEL DIMZ</title>
+  <title>H.M</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" type="image/x-icon" href="man.webp" />
@@ -16,6 +16,74 @@ include "includes/koneksi.php";
 
 <body>
   <style>
+    /*cuman bg gambar kota*/
+
+    @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200');
+
+    body {
+      background-image: url('../image/jon.jpg');
+      background-size: cover;
+      -webkit-animation: slidein 40s;
+      animation: slidein 40s;
+
+      -webkit-animation-fill-mode: forwards;
+      animation-fill-mode: forwards;
+
+      -webkit-animation-iteration-count: infinite;
+      animation-iteration-count: infinite;
+
+      -webkit-animation-direction: alternate;
+      animation-direction: alternate;
+    }
+
+    @-webkit-keyframes slidein {
+      from {
+        background-position: center;
+        background-size: 3190px;
+      }
+
+      to {
+        background-position: -15px 0px;
+        background-size: 2999px;
+      }
+    }
+
+    @keyframes slidein {
+      from {
+        background-position: center;
+        background-size: 3190px;
+      }
+
+      to {
+        background-position: -15px 0px;
+        background-size: 2999px;
+      }
+
+    }
+
+
+
+    .center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      margin: auto;
+      center: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(75, 75, 250, 0.3);
+      border-radius: 3px;
+    }
+
+    .center h1 {
+      text-align: center;
+      color: white;
+      font-family: 'Source Code Pro', monospace;
+      text-transform: uppercase;
+    }
+
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
     .honk-text {
@@ -36,26 +104,67 @@ include "includes/koneksi.php";
       margin-right: auto;
       margin-left: 0;
     }
+
+    /* Animasi teks mengetik */
+    .typewriter {
+      overflow: hidden;
+      /* Membuat efek teks mengetik terlihat */
+      border-right: .15em solid orange;
+      /* Garis imitasi kursor */
+      white-space: nowrap;
+      /* Mencegah teks turun ke baris baru */
+      margin: 0 auto;
+      /* Pusatkan teks */
+      letter-spacing: .15em;
+      /* Jarak antara karakter */
+      animation: typing 3.5s steps(40, end),
+        /* Animasi mengetik */
+        blink-caret .75s step-end infinite;
+      /* Animasi kursor */
+    }
+
+    /* Animasi untuk kursor */
+    @keyframes typing {
+      from {
+        width: 0
+      }
+
+      to {
+        width: 100%
+      }
+    }
+
+    @keyframes blink-caret {
+
+      from,
+      to {
+        border-color: transparent
+      }
+
+      50% {
+        border-color: orange;
+      }
+    }
   </style>
 
   <!------------------------------ISI BODY----------------------------- -->
 
   <!------------------AWAL BAGIAN HEADER----------------- -->
-  <div class="p-2 bg-light text-black text-center">
+  <div class="p-1 bg-light text-black text-center">
     <h1 class="honk-text">MANHATTAN</h1>
     </p>
   </div>
   <!------------------AKHIR BAGIAN HEADER----------------- -->
 
   <!------------------------------AWAL BAGIAN NAVBAR(MENU)----------------------------- -->
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <nav class="p-2 navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container-fluid">
       <ul class="navbar-nav">
         <li class="nav-item">
           <button type="button" id="tombol_pesan" class="btn btn-outline-light honk-text btn-lg btn-xl">PESAN</button>
         </li>
         <li class="nav-item">
-          <h5><a class="nav-link honk-text" href="../admin/index.php" id="admin_button">ADMIN?</a></h5>
+          <h5><a class="nav-link honk-text" href="../resepsionis/index.php" id="admin_button">STAF?</a></h5>
         </li>
         <li class="nav-item">
           <h5><a class="nav-link honk-text" href="">Home</a></h5>
@@ -67,8 +176,15 @@ include "includes/koneksi.php";
           <h5><a class="nav-link honk-text" href="#" id="tombol_fasilitas">Fasilitas Umum</a></h5>
         </li>
       </ul>
+
     </div>
   </nav>
+  <section>
+    <div class='air air1'></div>
+    <div class='air air2'></div>
+    <div class='air air3'></div>
+    <div class='air air4'></div>
+  </section>
 
   <!------------------------------AKHIR BAGIAN NAVBAR(MENU)----------------------------- -->
 
@@ -91,15 +207,13 @@ include "includes/koneksi.php";
       if ($result->num_rows > 0) {
         //membaca data pada baris tabel
         while ($row = $result->fetch_assoc()) {
-          $nf = $row["nama_fasilitas"];
           $gambar = $row["gambar"];
-          $ket = $row["keterangan"];
+
       ?>
           <div class="carousel-item <?php echo $aktif; ?> ">
             <img src="<?php echo $gambar; ?>" alt="Los Angeles" class="d-block" style="width:100%">
             <div class="carousel-caption">
-              <h3><?php echo $nf; ?></h3>
-              <p><?php echo $ket; ?></p>
+
             </div>
           </div>
 
@@ -110,13 +224,7 @@ include "includes/koneksi.php";
       ?>
       <!-- Akhir Script Panggil SlideShow Dari Tabel Fasilitas Umum menggunakan PHP -->
 
-      <!-- KONTROL TOMBOL KIRI DAN KANAN SLIDESHOW -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-      </button>
+
 
     </div>
   </div>
@@ -125,6 +233,7 @@ include "includes/koneksi.php";
 
   <!-- SCRIPT PEMESANAN -->
   <div class="container mt-4 col-sm-8" id="panel_pemesanan">
+
     <div class="card d-flex justify-content-center">
       <div class="card-body bg-dark">
         <div class="row bg-darky text-white">
@@ -186,10 +295,10 @@ include "includes/koneksi.php";
               <button type="button" id="tombol_batal" class="btn btn-outline-danger">Batal</button>
             </div>
           </form>
-
         </div>
       </div>
     </div>
+  </div>
   </div>
 
   <!-- SCRIPT FASILITAS -->
@@ -208,11 +317,11 @@ include "includes/koneksi.php";
         $ket = $row["keterangan"];
     ?>
 
-        <div class="container mt-4">
-          <div class="card">
+        <div class="card mt-2 mb-4 card-body bg-dark text-light">
+          <div class="card-title">
             <h5><?php echo $nf; ?></h5>
             <p><?php echo $ket; ?></p>
-            <img class="img-fluid" max-width: 100%; height: auto; src="<?php echo $gambar; ?>" alt="Gambar">
+            <img class="img-fluid" max-width: 100%; height: auto; src="<?php echo $gambar; ?>" alt="Gambar card image">
           </div>
         </div>
     <?php
@@ -241,7 +350,7 @@ include "includes/koneksi.php";
           $row2    = $result2->fetch_assoc();
       ?>
 
-          <div class="card mt-2 mb-4">
+          <div class="card mt-2 mb-4 card-body bg-dark text-light">
             <div class="">
               <h5 class="card-title"><?php echo $row2["nama_kamar"]; ?> :</h5>
               <ul>
@@ -264,97 +373,122 @@ include "includes/koneksi.php";
   </div>
 
   <!-- SCRIPT FOOTER -->
-  <div class="mt-10 p-0 bg-dark text-dark text-center">
-    <div class="container mt-0">
-      <div class="d-flex justify-content-center">
-        <div class="row">
-          <div class="col-sm form-floating mb-0 mt-0">
 
-          </div>
-        </div>
-      </div>
+  <div class="d-flex justify-content-center">
+    <div class="row">
+
     </div>
   </div>
   </div>
-  <div class="mt-8 p-2 bg-dark text-light text-center">
-    <div class=" container mt-2" id="panel_tentang_kami">
-      <div class="d-flex justify-content-center">
-        <div class="row">
-          <div class="col-sm-12 p-5">
-            <h2 class="text-center honk-text">MANHATTAN?</h2>
-            <p>
-
-            <h5 class="honk-text" Hotel Dimas> Selamat datang di Hotel Kami, tempat kenyamanan bertemu gaya. Kami bangga memberikan keramahtamahan yang luar biasa dan menciptakan pengalaman tak terlupakan bagi para tamu kami.
-              Terletak di jantung kota, hotel kami menawarkan akomodasi mewah dengan pemandangan cakrawala yang menakjubkan. Baik Anda bepergian untuk bisnis atau liburan, staf kami yang berdedikasi siap memastikan masa menginap Anda sempurna.
-              Di Hotel Kami, kami percaya untuk melampaui harapan Anda. Dari kamar dan suite kami yang elegan hingga fasilitas kelas dunia dan layanan pribadi kami, setiap aspek masa tinggal Anda dipilih dengan cermat untuk memberikan Anda pengalaman yang benar-benar luar biasa.
-              Temukan esensi kemewahan di Hotel Kami. Pesan penginapan Anda bersama kami hari ini dan biarkan kami menjadikan kunjungan Anda tak terlupakan.
-          </div>
-          <h2 class="honk-text">@manhattan_exampleofficial</h2>
-
-          </h1>
-          </p>
-        </div>
+  </div>
+  </div>
+  </div>
+  <div class="container-fluid mt-10 bg-dark text-white" id="panel_tentang_kami">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 p-6">
+        <h1 class="nav-link text-white honk-text text-center">
+          <!-- Teks animasi mengetik -->
+          <span class="typewriter"></span>
+        </h1>
+        <h5 class="honk-text text-center">Selamat datang di Hotel Kami, tempat kenyamanan bertemu gaya. Kami bangga memberikan keramahtamahan yang luar biasa dan menciptakan pengalaman tak terlupakan bagi para tamu kami. Terletak di jantung kota, hotel kami menawarkan akomodasi mewah dengan pemandangan cakrawala yang menakjubkan. Baik Anda bepergian untuk bisnis atau liburan, staf kami yang berdedikasi siap memastikan masa menginap Anda sempurna. Di Hotel Kami, kami percaya untuk melampaui harapan Anda. Dari kamar dan suite kami yang elegan hingga fasilitas kelas dunia dan layanan pribadi kami, setiap aspek masa tinggal Anda dipilih dengan cermat untuk memberikan Anda pengalaman yang benar-benar luar biasa. Temukan esensi kemewahan di Hotel Kami. Pesan penginapan Anda bersama kami hari ini dan biarkan kami menjadikan kunjungan Anda tak terlupakan.</h5>
+        <h5 class="honk-text text-center">@manhattan_exampleofficial</h5>
       </div>
     </div>
+  </div>
 
-    <!-- PANGGIL FILE JAVASCRIPT DARI FOLDER js -->
-    <script src=" js/jquery.min.js"></script>
-    <script src="js/bootstrap5.0.1.bundle.min.js"></script>
-    <!-- <script src="crud_js/pesan.js"></script> -->
 
-    <!------------------------------ AWAL KONDISI CODING JAVASCRIPT-------------------------------- -->
-    <script>
-      $(document).ready(function() {
+  </div>
 
-        /*KONDISI SAAT WEBSITE DIJALANKAN PERTAMA KALI*/
-        $('#panel_cek').hide();
-        $('#panel_fasilitas_kami').hide();
-        $('#panel_pemesanan').hide();
-        $('#panel_tentang_kami').show();
-        $('#panel_kamar').hide();
 
-        /*KONDISI TOMBOL PESAN SEKARANG DI KLIK*/
-        $("#tombol_pesan").click(function() {
-          $('#panel_tentang_kami').hide();
-          $('#panel_fasilitas_kami').hide();
-          $('#panel_cek').show();
-          $('#panel_pemesanan').show();
-          $('#panel_kamar').hide();
-          $('#demo_slide').hide();
-        });
+  <!-- PANGGIL FILE JAVASCRIPT DARI FOLDER js -->
+  <script src=" js/jquery.min.js"></script>
+  <script src="js/bootstrap5.0.1.bundle.min.js"></script>
+  <!-- <script src="crud_js/pesan.js"></script> -->
 
-        /*KONDISI TOMBOL BATAL SAAT DI KLIK*/
-        $("#tombol_batal").click(function() {
-          $('#panel_cek').hide();
-          $('#panel_fasilitas_kami').hide();
-          $('#panel_pemesanan').hide();
-          $('#panel_tentang_kami').show();
-          $('#demo_slide').show();
-          $('#panel_kamar').hide();
-        });
+  <!------------------------------ AWAL KONDISI CODING JAVASCRIPT-------------------------------- -->
+  <script>
+    $(document).ready(function() {
+      // Fungsi untuk menginisialisasi animasi teks
+      function initializeTypewriter() {
+        var text = "MANHATTAN?";
+        var speed = 150; // Kecepatan mengetik (ms)
+        var i = 0;
 
-        /*KONDISI TOMBOL BATAL SAAT DI KLIK*/
-        $("#tombol_fasilitas").click(function() {
-          $('#panel_cek').hide();
-          $('#panel_fasilitas_kami').show();
-          $('#panel_pemesanan').hide();
-          $('#panel_tentang_kami').hide();
-          $('#panel_kamar').hide();
-          $('#demo_slide').hide();
-        });
-        /*KONDISI TOMBOL BATAL SAAT DI KLIK*/
-        $("#tombol_kamar").click(function() {
-          $('#panel_cek').hide();
-          $('#panel_fasilitas_kami').hide();
-          $('#panel_pemesanan').hide();
-          $('#panel_tentang_kami').hide();
-          $('#panel_kamar').show();
-          $('#demo_slide').hide();
-        });
+        function typeWriter() {
+          if (i < text.length) {
+            document.querySelector('.typewriter').innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, speed);
+          } else {
+            setTimeout(eraseText, 2000); // Tunggu 2 detik sebelum menghapus teks
+          }
+        }
 
-      });
-    </script>
-    <!------------------------------ AWAL KONDISI CODING JAVASCRIPT-------------------------------- -->
+        function eraseText() {
+          if (i >= 0) {
+            var tempText = text.substring(0, i);
+            document.querySelector('.typewriter').innerHTML = tempText;
+            i--;
+            setTimeout(eraseText, speed);
+          } else {
+            i = 0;
+            setTimeout(typeWriter, 1000); // Tunggu 1 detik sebelum mengetik lagi
+          }
+        }
+
+        typeWriter(); // Mulai animasi
+      }
+
+      initializeTypewriter(); // Panggil fungsi inisialisasi saat dokumen siap
+    });
+
+    /*KONDISI SAAT WEBSITE DIJALANKAN PERTAMA KALI*/
+    $('#panel_cek').hide();
+    $('#panel_fasilitas_kami').hide();
+    $('#panel_pemesanan').hide();
+    $('#panel_tentang_kami').show();
+    $('#panel_kamar').hide();
+
+    /*KONDISI TOMBOL PESAN SEKARANG DI KLIK*/
+    $("#tombol_pesan").click(function() {
+      $('#panel_tentang_kami').hide();
+      $('#panel_fasilitas_kami').hide();
+      $('#panel_cek').show();
+      $('#panel_pemesanan').show();
+      $('#panel_kamar').hide();
+      $('#demo_slide').hide();
+    });
+
+    /*KONDISI TOMBOL BATAL SAAT DI KLIK*/
+    $("#tombol_batal").click(function() {
+      $('#panel_cek').hide();
+      $('#panel_fasilitas_kami').hide();
+      $('#panel_pemesanan').hide();
+      $('#panel_tentang_kami').show();
+      $('#demo_slide').show();
+      $('#panel_kamar').hide();
+    });
+
+    /*KONDISI TOMBOL BATAL SAAT DI KLIK*/
+    $("#tombol_fasilitas").click(function() {
+      $('#panel_cek').hide();
+      $('#panel_fasilitas_kami').show();
+      $('#panel_pemesanan').hide();
+      $('#panel_tentang_kami').hide();
+      $('#panel_kamar').hide();
+      $('#demo_slide').hide();
+    });
+    /*KONDISI TOMBOL BATAL SAAT DI KLIK*/
+    $("#tombol_kamar").click(function() {
+      $('#panel_cek').hide();
+      $('#panel_fasilitas_kami').hide();
+      $('#panel_pemesanan').hide();
+      $('#panel_tentang_kami').hide();
+      $('#panel_kamar').show();
+      $('#demo_slide').hide();
+    });
+  </script>
+  <!------------------------------ AWAL KONDISI CODING JAVASCRIPT-------------------------------- -->
 
 </body>
 <!-- END BODY -->

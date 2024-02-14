@@ -10,7 +10,7 @@
    </div>
    <div class="form-floating mb-2 mt-3 ">
      <input type="text" class="form-control" id="carinama" name="carinama">
-     <label for="carinama">Cari Nama Pemesan</label>
+     <label for="carinama">Cari Data Tamu</label>
    </div>
  </div>
 

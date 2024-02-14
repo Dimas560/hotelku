@@ -12,7 +12,7 @@ include "../../includes/koneksi.php";
       <label for="nama">Cari Kamar</label>
     </div>
     <div class="form-floating mb-2 mt-3">
-      <button type="button" onclick="add_modal_kamar()" class="btn btn-outline-dark">Tambah Kamar</button>
+      <button type="button" onclick="add_modal_kamar()" class="btn btn-outline-light">Tambah Kamar</button>
     </div>
   </div>
 
@@ -193,7 +193,7 @@ include "../../includes/koneksi.php";
       success: function(data) {
         if (data == "OK") {
           alert("Delete Successed!");
-          window.location.href = "index.php?id=kamar";
+          window.location.href = "home.php?id=kamar";
         }
         if (data == "ERROR") {
           alert("Data Failed To Delete!");
@@ -257,7 +257,7 @@ include "../../includes/koneksi.php";
         success: function(data) {
           if (data == "OK") {
             alert("Data Updated!");
-            window.location.href = "index.php?id=kamar";
+            window.location.href = "home.php?id=kamar";
           }
           if (data == "ERROR") {
             alert("Data not updated!");

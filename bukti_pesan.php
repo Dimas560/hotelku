@@ -8,16 +8,13 @@ $checkin   = isset($_GET['checkin']) ? $_GET['checkin'] : '';
 $checkout  = isset($_GET['checkout']) ? $_GET['checkout'] : '';
 $jkamar    = isset($_GET['jkamar']) ? $_GET['jkamar'] : '';
 $idkamar   = isset($_GET['idkamar']) ? $_GET['idkamar'] : '';
-
-// Munculkan notifikasi
-echo '<script>alert("RESERVASI BERHASIL!");</script>';
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <link rel="icon" href=" ../image/man.webp">
+    <link rel="icon" href="../image/man.webp">
     <title><?php echo "Manhattan - " . $nama; ?></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,7 +24,6 @@ echo '<script>alert("RESERVASI BERHASIL!");</script>';
     <link href="css/style_bukti_pesan.css" rel="stylesheet">
     <style>
         @media print {
-
 
             /* Sembunyikan tombol cetak saat mencetak */
             #printInvoice {
@@ -72,7 +68,7 @@ echo '<script>alert("RESERVASI BERHASIL!");</script>';
             <div style="min-width: 600px">
                 <header>
                     <div style="display: flex; align-items: center;">
-                        <img src="image/man.webp" class="rounded-circle" alt="" width="250" height="250">
+                        <img src="../image/man.webp" class="rounded-circle" alt="" width="250" height="250">
                         <h1 style="margin-left: 20px; text-transform: uppercase;">RESERVATION COMPLETE</h1>
                     </div>
                 </header>
@@ -125,6 +121,9 @@ echo '<script>alert("RESERVASI BERHASIL!");</script>';
     <script src="js/bootstrap5.0.1.bundle.min.js"></script>
     <script>
         $(document).ready(function() {
+            // Munculkan modal notifikasi saat halaman dimuat
+            $('#notificationModal').modal('show');
+
             $('#printInvoice').click(function() {
                 // Dapatkan waktu saat ini
                 var currentDate = new Date();
@@ -145,6 +144,23 @@ echo '<script>alert("RESERVASI BERHASIL!");</script>';
             });
         });
     </script>
+
+    <!-- Modal Notifikasi -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationModalLabel">RESERVASI BERHASIL!</h5>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Selamat! Reservasi Anda telah berhasil. Terima kasih telah memilih Hotel Manhattan.
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

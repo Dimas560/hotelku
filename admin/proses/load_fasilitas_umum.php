@@ -12,7 +12,7 @@ include "../../includes/koneksi.php";
       <label for="cari_fasilitas_umum">Cari Fasilitas</label>
     </div>
     <div class="form-floating mb-2 mt-3">
-      <button type="button" onclick="add_modal_fasilitas_umum()" class="btn btn-outline-dark">Tambah Fasilitas</button>
+      <button type="button" onclick="add_modal_fasilitas_umum()" class="btn btn-outline-light">Tambah Fasilitas</button>
     </div>
   </div>
 
@@ -152,7 +152,7 @@ include "../../includes/koneksi.php";
       success: function(data) {
         if (data == "OK") {
           alert("Data Berhasil dihapus!");
-          window.location.href = "index.php?id=fasilitas_umum";
+          window.location.href = "home.php?id=fasilitas_umum";
         }
         if (data == "ERROR") {
           alert("Data Gagal dihapus!");
@@ -204,7 +204,7 @@ include "../../includes/koneksi.php";
             if (data == "OK") {
               alert("Data Tersimpan!");
               document.getElementById("form_fu").reset();
-              window.location.href = "index.php?id=fasilitas_umum";
+              window.location.href = "home.php?id=fasilitas_umum";
             }
             if (data == "ERROR") {
               alert("Data TIDAK tersimpan!");

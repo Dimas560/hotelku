@@ -1,12 +1,3 @@
-<?php
-if (!isset($_SESSION)) {
-  session_start();
-}
-if (isset($_SESSION['admin'])) {
-  header('location: home.php');
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +7,105 @@ if (isset($_SESSION['admin'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="../css/bootstrap5.0.1.min.css" rel="stylesheet">
   <style>
+    /*cuman bg gambar kota*/
+
+    @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200');
+
+    body {
+      background-image: url('../image/zzz.jpg');
+      background-size: cover;
+      -webkit-animation: slidein 20s;
+      animation: slidein 20s;
+
+      -webkit-animation-fill-mode: forwards;
+      animation-fill-mode: forwards;
+
+      -webkit-animation-iteration-count: infinite;
+      animation-iteration-count: infinite;
+
+      -webkit-animation-direction: alternate;
+      animation-direction: alternate;
+    }
+
+    @-webkit-keyframes slidein {
+      from {
+        background-position: center;
+        background-size: 2000px;
+      }
+
+      to {
+        background-position: -15px 0px;
+        background-size: 2750px;
+      }
+    }
+
+    @keyframes slidein {
+      from {
+        background-position: center;
+        background-size: 2000px;
+      }
+
+      to {
+        background-position: -15px 0px;
+        background-size: 2350px;
+      }
+
+    }
+
+
+
+    .center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      margin: auto;
+      center: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(75, 75, 250, 0.3);
+      border-radius: 3px;
+    }
+
+    .center h1 {
+      text-align: center;
+      color: white;
+      font-family: 'Source Code Pro', monospace;
+      text-transform: uppercase;
+    }
+
+    /* CSS untuk efek fade-in dan fade-out */
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn ease-in 1s forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .fade-out {
+      opacity: 1;
+      animation: fadeOut ease-out 1s forwards;
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
     body {
@@ -75,30 +165,22 @@ if (isset($_SESSION['admin'])) {
 
     .footer-text a {
       color: #000;
-      /* Ubah warna teks menjadi hitam */
       text-decoration: none;
     }
 
     .footer-text a:hover {
       text-decoration: underline;
     }
-
-    .honk-text {
-      font-family: "Playfair Display", serif;
-      font-optical-sizing: auto;
-      font-weight: 500;
-      font-style: normal;
-    }
   </style>
 </head>
 
 <body>
 
-  <div class="container-fluid">
+  <div class="container-fluid fade-in">
     <div class="login-header">
       <img src="../image/man.png" alt="Man Image" style="width: 275px; height: 100px;">
     </div>
-    <form id=" flogin">
+    <form id="flogin" class="login-container">
       <div class="mb-3">
         <input type="text" class="form-control" id="username" placeholder="Username Admin">
       </div>
@@ -108,43 +190,82 @@ if (isset($_SESSION['admin'])) {
       <button type="button" id="proses_login" class="btn btn-login">Log In</button>
     </form>
     <div class="footer-text">
-      <a href="../index.php" style="color: #000;">Kembali?</a> | <a href="../resepsionis/index.php" style=" color: #000;"">Resepsonis?</a>
+      <a href="../index.php" id="kembali" style="color: #000;">kembali?</a> | <a href="../resepsionis/index.php" id="resepsionis" style="color: #000;">Resepsionis?</a>
     </div>
   </div>
+  <div class="wind-animation"></div>
 
   <!-- SCRIPTS -->
-  <script src=" ../js/jquery.min.js"></script>
-        <script src="../js/bootstrap5.0.1.bundle.min.js"></script>
-        <script>
-          $(document).ready(function() {
-            $("#proses_login").click(function() {
-              var user = $("#username").val();
-              var pass = $("#password").val();
-              if ((user == "") || (pass == "")) {
-                alert("Field belum diisi!");
-                return;
-              }
-              $.ajax({
-                url: "login_admin.php",
-                method: "POST",
-                data: {
-                  username: user,
-                  password: pass
-                },
-                success: function(data) {
-                  if (data == "OK") {
-                    alert("Login Successfuly!");
-                    window.location.href = "home.php";
-                  }
-                  if (data == "ERROR") {
-                    document.getElementById("flogin").reset();
-                    alert("Terjadi kesalahan! Error Username dan Password");
-                  }
-                }
-              });
-            });
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/bootstrap5.0.1.bundle.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#proses_login").click(function() {
+        var user = $("#username").val();
+        var pass = $("#password").val();
+        if ((user == "") || (pass == "")) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Field belum diisi!',
+            text: 'Mohon lengkapi semua field!',
           });
-        </script>
+          return;
+        }
+        $.ajax({
+          url: "../admin/login_admin.php",
+          method: "POST",
+          data: {
+            username: user,
+            password: pass
+          },
+          success: function(data) {
+            if (data == "OK") {
+              Swal.fire({
+                icon: 'success',
+                title: 'Login Berhasil!',
+                text: 'Hai Admin!',
+              }).then(function() {
+                window.location.href = "../admin/home.php";
+              });
+            } else {
+              document.getElementById("flogin").reset();
+              Swal.fire({
+                icon: 'error',
+                title: 'Terjadi Kesalahan!',
+                text: 'Error Username dan Password!',
+              }).then(function() {
+                // Mengarahkan pengguna kembali ke halaman indeks setelah pesan kesalahan ditampilkan
+                setTimeout(function() {
+                  window.location.href = "../admin/index.php";
+                }, 2000); // Delay 2 detik sebelum mengarahkan kembali ke halaman indeks
+              });
+            }
+          }
+        });
+        $(".container-fluid").addClass("fade-out"); // Tambah class fade-out
+      });
+
+      // Tambahkan event listener untuk tombol "Kembali?"
+      $("#kembali").click(function(event) {
+        event.preventDefault(); // Hindari aksi default dari link
+        $(".container-fluid").addClass("fade-out"); // Tambah class fade-out
+        setTimeout(function() {
+          window.location.href = $("#kembali").attr("href");
+        }, 1000); // Adjust the delay as needed (1000 milliseconds = 1 second)
+      });
+
+      // Tambahkan event listener untuk tombol "Admin?"
+      $("#admin").click(function(event) {
+        event.preventDefault(); // Hindari aksi default dari link
+        $(".container-fluid").addClass("fade-out"); // Tambah class fade-out
+        setTimeout(function() {
+          window.location.href = $("#admin").attr("href");
+        }, 1000); // Adjust the delay as needed (1000 milliseconds = 1 second)
+      });
+    });
+  </script>
+
 </body>
 
 </html>

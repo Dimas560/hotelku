@@ -7,6 +7,107 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="../css/bootstrap5.0.1.min.css" rel="stylesheet">
   <style>
+    /*cuman bg gambar kota*/
+
+    @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200');
+
+    body {
+      background-image: url('../image/zzz.jpg');
+      background-size: cover;
+      -webkit-animation: slidein 20s;
+      animation: slidein 20s;
+
+      -webkit-animation-fill-mode: forwards;
+      animation-fill-mode: forwards;
+
+      -webkit-animation-iteration-count: infinite;
+      animation-iteration-count: infinite;
+
+      -webkit-animation-direction: alternate;
+      animation-direction: alternate;
+    }
+
+    @-webkit-keyframes slidein {
+      from {
+        background-position: center;
+        background-size: 2000px;
+      }
+
+      to {
+        background-position: -15px 0px;
+        background-size: 2750px;
+      }
+    }
+
+    @keyframes slidein {
+      from {
+        background-position: center;
+        background-size: 2000px;
+      }
+
+      to {
+        background-position: -15px 0px;
+        background-size: 2350px;
+      }
+
+    }
+
+
+
+    .center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      margin: auto;
+      center: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(75, 75, 250, 0.3);
+      border-radius: 3px;
+    }
+
+    .center h1 {
+      text-align: center;
+      color: white;
+      font-family: 'Source Code Pro', monospace;
+      text-transform: uppercase;
+    }
+
+
+
+    /* CSS untuk efek fade-in dan fade-out */
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn ease-in 1s forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .fade-out {
+      opacity: 1;
+      animation: fadeOut ease-out 1s forwards;
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
     body {
@@ -66,7 +167,6 @@
 
     .footer-text a {
       color: #000;
-      /* Ubah warna teks menjadi hitam */
       text-decoration: none;
     }
 
@@ -85,7 +185,7 @@
 
 <body>
 
-  <div class="container-fluid">
+  <div class="container-fluid fade-in">
     <div class="login-header">
       <img src="../image/man.png" alt="Man Image" style="width: 275px; height: 100px;">
     </div>
@@ -99,11 +199,13 @@
       <button type="button" id="proses_login" class="btn btn-login">Log In</button>
     </form>
     <div class="footer-text">
-      <a href="../index.php" style="color: #000;">kembali?</a> | <a href="../admin/index.php" style="color: #000;">Admin?</a>
+      <a href="../index.php" id="kembali" style="color: #000;">kembali?</a> | <a href="../admin/index.php" id="admin" style="color: #000;">Admin?</a>
     </div>
   </div>
+  <div class="wind-animation"></div>
 
   <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../js/jquery.min.js"></script>
   <script src="../js/bootstrap5.0.1.bundle.min.js"></script>
   <script>
@@ -112,7 +214,11 @@
         var user = $("#username").val();
         var pass = $("#password").val();
         if ((user == "") || (pass == "")) {
-          alert("Field belum diisi!");
+          Swal.fire({
+            icon: 'warning',
+            title: 'Field belum diisi!',
+            text: 'Mohon lengkapi semua field!',
+          });
           return;
         }
         $.ajax({
@@ -124,18 +230,51 @@
           },
           success: function(data) {
             if (data == "OK") {
-              alert("Login Berhasil! Hai Resepsionis!");
-              window.location.href = "home.php";
-            }
-            if (data == "ERROR") {
+              Swal.fire({
+                icon: 'success',
+                title: 'Login Berhasil!',
+                text: 'Hai Resepsionis!',
+              }).then(function() {
+                window.location.href = "home.php";
+              });
+            } else {
               document.getElementById("flogin").reset();
-              alert("Terjadi kesalahan! Error Username dan Password");
+              Swal.fire({
+                icon: 'error',
+                title: 'Terjadi Kesalahan!',
+                text: 'Error Username dan Password!',
+              }).then(function() {
+                // Mengarahkan pengguna kembali ke halaman indeks setelah pesan kesalahan ditampilkan
+                setTimeout(function() {
+                  window.location.href = "../resepsionis/index.php";
+                }, 2000); // Delay 2 detik sebelum mengarahkan kembali ke halaman indeks
+              });
             }
           }
         });
+        $(".container-fluid").addClass("fade-out"); // Tambah class fade-out
+      });
+
+      // Tambahkan event listener untuk tombol "Kembali?"
+      $("#kembali").click(function(event) {
+        event.preventDefault(); // Hindari aksi default dari link
+        $(".container-fluid").addClass("fade-out"); // Tambah class fade-out
+        setTimeout(function() {
+          window.location.href = $("#kembali").attr("href");
+        }, 1000); // Adjust the delay as needed (1000 milliseconds = 1 second)
+      });
+
+      // Tambahkan event listener untuk tombol "Admin?"
+      $("#admin").click(function(event) {
+        event.preventDefault(); // Hindari aksi default dari link
+        $(".container-fluid").addClass("fade-out"); // Tambah class fade-out
+        setTimeout(function() {
+          window.location.href = $("#admin").attr("href");
+        }, 1000); // Adjust the delay as needed (1000 milliseconds = 1 second)
       });
     });
   </script>
+
 </body>
 
 </html>
